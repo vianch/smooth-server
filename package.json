@@ -1,6 +1,6 @@
 {
   "name": "smooth-server",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Little node server based on lite-server and browsersync",
   "main": "index.js",
   "scripts": {
