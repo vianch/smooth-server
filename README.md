@@ -19,16 +19,16 @@ $ npm install smooth-server --save-dev
     },
 ```
 
-With the above script entry, you can then start `lite-server` via:
+With the above script entry, you can then start `smoot-server` via:
 ```bash
 $ npm run dev
 ```
 
 ### Global Installation
 
-lite-server can be also installed globally, if preferred:
+smoot-server can be also installed globally, if preferred:
 ```bash
-$ npm install -g lite-server
+$ npm install -g smoot-server
 
 # To run:
 $ smooth-server
@@ -39,7 +39,7 @@ $ smooth-server --config path/smooth-server.config.json
 
 The default behavior serves from the current folder, opens a browser, and applies a HTML5 route fallback to `./index.html`.
 
-lite-server uses [BrowserSync](https://www.browsersync.io/), and allows for configuration overrides via a local `bs-config.json` or `bs-config.js` file in your project.
+smoot-server uses [BrowserSync](https://www.browsersync.io/), and allows for configuration overrides via a local `bs-config.json` or `bs-config.js` file in your project.
 
 You can provide custom path to your config file via `-c` or `--config=` run time options:
 ```bash
@@ -67,7 +67,7 @@ module.exports = {
 };
 ```
 
-The `bs-config.js` file may also export a function that receives the lite-server Browsersync instance as its only argument. While not required, the return value of this function will be used to extend the default lite-server configuration.
+The `bs-config.js` file may also export a function that receives the smoot-server Browsersync instance as its only argument. While not required, the return value of this function will be used to extend the default smoot-server configuration.
 ```js
 module.exports = function(bs) {
 
