@@ -1,52 +1,59 @@
 # smooth-server
 
-## Installation and Usage
+A simple local development HTTP server optimized for productivity.
 
-The recommended installation method is a local NPM install for your project:
-```bash
+## Installation
+
+#### Local Installation 
+```sh
 $ npm install smooth-server --save-dev
+$ yarn add smooth-server --dev
 ```
+After installing, add following "script" entry within your project's `package.json` file:  
 
-...and add a "script" entry within your project's `package.json` file:
-```
-# Inside package.json...
+```json
+{
   "scripts": {
     "dev": "smooth-server"
   },
-
-    "scripts": {
-      "dev": "smooth-server --config path/config.json"
-    },
+}
 ```
-
-With the above script entry, you can then start `smoot-server` via:
-```bash
+With the above script entry, you can then start `smooth-server` via:  
+```sh
 $ npm run dev
 ```
+You can also specify a configuration file: 
+```json
+{
+  "scripts": {
+    "dev": "smooth-server --config path/config.json"
+  },
+}
+```
+If a config file is not found the default port will be `3333` and the listened files will be `["./**/*.{html,htm,css,js}"]`.
 
-### Global Installation
-
-smoot-server can be also installed globally, if preferred:
-```bash
-$ npm install -g smoot-server
-
-# To run:
+#### Global Installation
+```sh
+$ npm install -g smooth-server
+```
+You can run it directly from the command line: 
+```sh
 $ smooth-server
 $ smooth-server --config path/smooth-server.config.json
 ```
 
 ## Custom Configuration
 
-The default behavior serves from the current folder, opens a browser, and applies a HTML5 route fallback to `./index.html`.
+The default behavior serves from the current directory, opens a browser, and applies a HTML5 route fallback to `./index.html`.
 
-smoot-server uses [BrowserSync](https://www.browsersync.io/), and allows for configuration overrides via a local `bs-config.json` or `bs-config.js` file in your project.
+`smooth-server` uses [BrowserSync](https://www.browsersync.io/), and allows for configuration overrides via a local `bs-config.json` or `bs-config.js` file in your project. If these files do not exist, it will use the default configuration.
 
-You can provide custom path to your config file via `-c` or `--config=` run time options:
-```bash
+You can provide custom path to your config file via `-c` or `--config=` command line options:
+```sh
 smooth-server -c configs/my-bs-config.js
 ```
 
-For example, to change the server port, watched file paths, and base directory for your project, create a `bs-config.json` in your project's folder:
+#### Configuring via `bs-config.json` 
 ```json
 {
   "port": 8081,
@@ -55,7 +62,8 @@ For example, to change the server port, watched file paths, and base directory f
 }
 ```
 
-A more complicated example with modifications to the server middleware can be done with a `bs-config.js` file, which requires the `module.exports = { ... };` syntax:
+#### Configuring via `bs-config.js`
+This approach is more flexible and allows using JavaScript instead of a static JSON.
 ```js
 module.exports = {
   server: {
@@ -67,37 +75,20 @@ module.exports = {
 };
 ```
 
-The `bs-config.js` file may also export a function that receives the smoot-server Browsersync instance as its only argument. While not required, the return value of this function will be used to extend the default smoot-server configuration.
-```js
-module.exports = function(bs) {
+Full list of BrowserSync options can be found in its docs: <http://www.browsersync.io/docs/options/>
 
-  return {
-    server: {
-      middleware: {
-        // overrides the second middleware default with new settings
-        1: require('connect-history-api-fallback')({
-          index: '/index.html',
-          verbose: true
-        })
-      }
-    }
-  };
+> **Note:** When using middleware overrides the specific middleware module must be installed in your project. For the above example, `connect-history-api-fallback` package needs to be installed in your project:
 
-};
-```
-
-**NOTE:** Keep in mind that when using middleware overrides the specific middleware module must be installed in your project. For the above example, you'll need to do:
-```bash
+```sh
 $ npm install connect-history-api-fallback --save-dev
 ```
 
-...otherwise you'll get an error similar to:
-```
+Or else, you will get an error:
+```shell
 Error: Cannot find module 'connect-history-api-fallback'
 ```
 
-Another example: To remove one of the [default middlewares](./lib/config-defaults.js), such as `connect-logger`, you can set it's array index to `null`:
-
+> **TIP:** To remove one of the default middlewares such as `connect-logger`, set its array index to `null`:
 ```js
 module.exports = {
   server: {
@@ -107,5 +98,3 @@ module.exports = {
   }
 };
 ```
-
-A list of the entire set of BrowserSync options can be found in its docs: <http://www.browsersync.io/docs/options/>
